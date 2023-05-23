@@ -1,0 +1,5 @@
+1. Names: James Cumberbatch, Aviva Blonder
+2. The solver does not work, it marks the path wrong and the stack solver does not move at all.
+3. Big-O complexity is O(n), where n is the number of squares checked. There's one variable sized loop, which will run that many times. (The one in solve(). The one in step() is technically variable sized but always less than 5, so it doesn't count in Big-O complexity)
+4. The queue algorithm is better. It finds better solutions. For example, in maze-7, the queue version produces a much shorter solution than the stack version. In addition, it will always return the shortest path, which is easy to see by the fact that it checks the shortest paths first. The stack version is faster sometimes, but not always, while the queue version always returns the better path.
+5. I don't know it. They both seem similar to Bellman-Ford?

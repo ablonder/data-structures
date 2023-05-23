@@ -1,0 +1,7 @@
+- testAddEfficiency: Using the single-parameter add method, it took .077 seconds to add 1,000,000 integers to an array. It took about five orders of magnitude longer, 841.669 seconds, to add 1,000,000 integers to the beginning of an array using the add(Integer, AnyType) method. It took so much longer because every time it adds to the front of a list, everything in the original list (everything after the added index) needs to be moved over one, which takes more and more time, the longer the list gets. When adding an element to the end of a list, nothing needs to be moved, so it doesn't take that extra time.
+
+- testRemoveEfficiency: Removing 1,000,000 elements from a list took .125 secconds, including how long it took to add all 1,000,000 items so they could then be removed.
+
+- testMemory(): I got to 33550000 on default memory usage. I only got up to 16770000 with extra memory allowance.
+It prints out numbers in chunks and then pauses. This happens nearly every run at about the same places, though not at the exact same ones. It probably pauses whenever it needs to resize the array.
+By the way, there's a glitch with the Eclipse Console where it ocassionally overwrites the output stream after clicking away from the window. I have no idea why it does this, it happened a few times and then it stopped without any changes to the code.

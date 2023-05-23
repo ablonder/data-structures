@@ -1,0 +1,75 @@
+I affirm that I have adhered to the Honor Code on this assignment.
+
+1) Aviva Blonder
+
+2) As far as I am aware, my classes and programs are fully functional. Collection Timer runs very slowly, but I tested the MyLinkedList add() and contains() methods for efficiency and they went through data very quickly.
+
+3) Note: it was running so slowly on 5000 words in incremements of 5000 that I changed it to 5 words in increments of 5, so it ran in a reasonable amount of time. I used these settings for all 4 questions.
+Question 1:
+Wordlist: small-wordlist.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MyLinkedList
+=======================================
+  1:       5 words in    1654 milliseconds
+  2:      10 words in    2912 milliseconds
+  3:      15 words in    3612 milliseconds
+  4:      20 words in    4032 milliseconds
+  5:      25 words in    4274 milliseconds
+
+Wordlist: small-wordlist.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MRUList
+=======================================
+  1:       5 words in    1656 milliseconds
+  2:      10 words in    3281 milliseconds
+  3:      15 words in    4920 milliseconds
+  4:      20 words in    6592 milliseconds
+  5:      25 words in    8254 milliseconds
+
+Question 2:
+For MyLinkedList, the running time didn't quite double as the number of words in doubled. I believe that is the case because, in an attempt to make it run faster for 5000 words in incrememnts of 5000, I changed the add algorithm from a linnear one that started going through the list from the beginning to find the index for every addition, to a logarithmic one that starts from the beginning if the index is less than 1/2 of the size of the list and otherwise starts from the end.
+The running time of the MRUList doubled as the number of words in it doubled because  I have to searched through the list using a for-loop in linnear time, and took a constant amount of time to remove that item from where it was and move it to the front of the list.
+
+Question 3:
+Wordlist: medium-wordlist.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MyLinkedList
+=======================================
+  1:       5 words in  113711 milliseconds
+  2:      10 words in  177085 milliseconds
+  3:      15 words in  250441 milliseconds
+  4:      20 words in  298952 milliseconds
+  5:      25 words in  338198 milliseconds
+
+Wordlist: medium-wordlist.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MRUList
+=======================================
+  1:       5 words in  163945 milliseconds
+  2:      10 words in  294598 milliseconds
+  3:      15 words in  443050 milliseconds
+  4:      20 words in  591869 milliseconds
+  5:      25 words in  740807 milliseconds
+
+Though the medium wordlist is only 9 times as large as the small wordlist, the runtimes were almost 100 times longer for both MyLinkedList and MRUList. Like for small wordlist, the runtime does not quite double as the number of words in does. This huge increase in run time from the small wordlist to the medium one implies that for some reason, looking through the wordlist is quadratic for both MyLinkedList and MRUList, as opposed to linnear, which would explain why everything has been taking so long.
+
+Question 4:
+Wordlist: pride-and-prejudice.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MyLinkedList
+=======================================
+  1:       5 words in       0 milliseconds
+  2:      10 words in       0 milliseconds
+  3:      15 words in       1 milliseconds
+  4:      20 words in       2 milliseconds
+  5:      25 words in       1 milliseconds
+
+Wordlist: pride-and-prejudice.txt  Document: pride-and-prejudice.txt
+words: 5  increment: 5  steps: 5  reps: 5
+Class: MRUList
+=======================================
+  1:       5 words in  185436 milliseconds
+  2:      10 words in  375802 milliseconds
+
+The runtimes were next to nothing for MyLinkedList, but it took even longer than medium wordlist for MRUList (everything took so long that I was only able to finish two repetitions before the lab was due). I believe MyLinkedList took so little time because, since the wordlist was the document being checked, it never had to go to the end of the wordlist without finding the word. Instead, since "pride-and-prejudice.txt" was read in in the same order for the wordlist and document to be checked, the words being checked, which were at the beginning of the document, were also at the beginning of the wordlist and could be accessed in constant time as opposed to linnear or quadratic.
+MRUList took so long, on the other hand, because all new words were added at the beginning, so "pride-and-prejudice.txt" was in reverse order as the wordlist from the order in the document, which meant the search times could be linnear in the worst case - if the words being searched for were only at the beginning of the document.

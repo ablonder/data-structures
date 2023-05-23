@@ -1,0 +1,236 @@
+/**
+ * Implementation of a HashMap using an array of linked lists
+ * 
+ * @author Aviva Blonder
+ */
+
+package lab8;
+
+import java.util.LinkedList;
+
+public class MyHashMap<K, V> {
+	LinkedList<MyEntry>[] table;
+	int size;
+	float loadFactor;
+	
+	/**
+	 * Initializes table as an array of capacity empty LinkedLists, size as 0,
+	 * and loadFactor as loadFactor
+	 * 
+	 * @param capacity
+	 * @param loadFactor
+	 */
+	public MyHashMap(int capacity, float loadFactor){
+		this.loadFactor = loadFactor;
+		newTable(capacity);
+	}
+	
+	public void newTable(int capacity){
+		table = (LinkedList<MyEntry>[]) new LinkedList[capacity];
+		for(int i = 0; i < capacity; i++)
+			table[i] = new LinkedList<MyEntry>();
+		size = 0;
+	}
+	
+	/** Constructs a new MyHashMap with capacity 11 and loadFactor .75 */
+	public MyHashMap(){
+		this(11, (float) .75);
+	}
+	
+	/**
+	 * Returns size
+	 * 
+	 * @return size
+	 */
+	public int size(){
+		return size;
+	}
+	
+	/**
+	 * Returns whether the hashmap is empty
+	 * @return true if size is 0 and false otherwise
+	 */
+	public boolean isEmpty(){
+		if(size == 0) return true;
+		return false;
+	}
+	
+	/** clears each LinkedList in table */
+	public void clear(){
+		for(LinkedList<MyEntry> list : table) list.clear();
+		size = 0;
+	}
+	
+	/**
+	 * Creates a string of the contents of table
+	 * 
+	 * @return toString() of each LinkedList in table
+	 */
+	public String toString(){
+		String str = "";
+		for(LinkedList<MyEntry> list : table){
+			str += "[";
+			for(MyEntry entry : list){
+				str += entry.toString() + " ";
+			}
+			str += "] ";
+		}
+		return str;
+	}
+	
+	/**
+	 * Adds key-value pair to the correct LinkedList in table
+	 * 
+	 * @param key
+	 * @param value
+	 * @return previous value of key if it already exists, or null otherwise
+	 * @throws NullPointerException if value is null
+	 */
+	public V put(K key, V value){
+		if(value == null || key == null)
+			throw new NullPointerException("That's not a valid value!");
+		int index = key.hashCode()%table.length;
+		for(MyEntry item : table[index]){
+			if(item.equals(key)){
+				V val = item.value;
+				item.value = value;
+				return val;
+			}
+		}
+		size++;
+		if(size/table.length > loadFactor) resize();
+		table[index].add(new MyEntry(key, value));
+		return null;
+	}
+	
+	/** Double table's capacity and rehash items into the new array */
+	private void resize(){
+		int len = 2*table.length + 1;
+		int i = 2;
+		while(i < Math.sqrt(len)){
+			if(len%i == 0){
+				len += 2;
+				i = 2;
+			} else {
+				i++;
+			}
+		}
+		LinkedList<MyEntry>[] oldarray =  table;
+		newTable(len);
+		for(LinkedList<MyEntry> list : oldarray){
+			for(MyEntry thing : list){
+				put(thing.key, thing.value);
+			}
+		}
+	}
+	
+	/**
+	 * Returns the value of the MyEntry designated by key
+	 * @param key
+	 * @return value of the MyEntry designated by key or null if absent
+	 */
+	public V get(K key){
+		int index = key.hashCode()%table.length;
+		for(MyEntry item : table[index]){
+			if(item.equals(key)){
+				return item.value;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Removes the MyEntry designated by key from table and returns its value
+	 * @param key
+	 * @return value of the MyEntry designated by key or null if absent
+	 */
+	public V remove(K key){
+		int index = key.hashCode()%table.length;
+		int i = 0;
+		for(MyEntry item : table[index]){
+			if(item.equals(key)){
+				V val = item.value;
+				table[index].remove(i);
+				return val;
+			}
+			i++;
+		}
+		return null;
+	}
+	
+	/**
+	 * Determines if a MyEntry exists designated by key
+	 * @param key
+	 * @return true if key designates a MyEntry or false if not
+	 */
+	public boolean containsKey(K key){
+		int index = key.hashCode()%table.length;
+		for(MyEntry item : table[index]){
+			if(item.equals(key)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Determines if a MyEntry exists with value
+	 * 
+	 * @param value
+	 * @return true if a MyEntry exists with value and false otherwise
+	 */
+	public boolean containsValue(V value){
+		for(LinkedList<MyEntry> list : table){
+			for(MyEntry item : list){
+				if(item.value.equals(value)){
+					return true;
+				}
+			}
+		}
+		return false;			
+	}
+	
+	/** Nodes of key-value pairs that serve as entries in the LinkedLists in table */
+	private class MyEntry{
+		K key;
+		V value;
+		
+		/**
+		 * Initializes key and value
+		 * 
+		 * @param key
+		 * @param value
+		 */
+		public MyEntry(K key, V value){
+			this.value = value;
+			this.key = key;
+		}
+		
+		/**
+		 * Calculates the hashCode of key
+		 * 
+		 * @return hashCode() of key
+		 */
+		public int hashCode(){
+			return key.hashCode();
+		}
+		
+		/**
+		 * Determines if two entries have the same key
+		 * @param other
+		 * @return true if other equals() key and false otherwise
+		 */
+		public boolean equals(Object other){
+			return key.equals(other);
+		}
+		
+		/**
+		 * Returns MyEntry in string form
+		 * 
+		 *@return toString of key, toString of value
+		 */
+		public String toString(){
+			return "(" + key.toString() + ", " + value.toString() + ")";
+		}
+	}
+}

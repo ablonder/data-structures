@@ -1,0 +1,18 @@
+Aviva Blonder
+
+I affirm that I have adhered to the Honor Code on this assignment.
+
+I am using all of my remaining late days necessary to have this lab counted as on time (I have used none of them on any previous labs).
+
+My program completes all of the necessary functions successfully, though topcenter takes a very long time, especially on the longer data sets. All operations, including constructing a new BaconNumber object, take a long time with the longer data sets.
+Also, it might be a glitch with my computer, but the list printed out by findAll is so long that it cannot be displayed in its entirety - the beginning of the list or anything before it is not accessible even by scrolling by the time the end has been printed.
+
+I decided to implement the graph as an adjacency list, where the list of vertices was a trie which each actor and movie as an entry, the last node of which contained the relevant information, including a hash set of outgoing edges.
+I used a JUnit test case to test my graph implementation, sumbitted with the lab.
+
+For extra credit, I implemented:
+1. findall - iterates through a list of all of the actors and actresses and performs find on each of them, a convenient way to find every path back to the center without having to find each actor individually.
+2. most - iterates through the list of actors and actresses, keeping track of which has the most movie credits and how many that is.
+3. longest - goes to the end of the list of actors connected to the center (which is in order from closest to furthest) and performs find on the last one.
+4. movies - finds name in the trie/graph and iterates through all of its outgoing edges, printing each as it goes.
+5. If the IMDB file cannot be opened, the main method goes into a loop where the user is presented with a list of possible files and given an oportunity to choose one of those or give another url until a valid file is accessed.
